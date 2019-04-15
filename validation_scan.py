@@ -1,13 +1,12 @@
 # -*- coding: cp1252 -*-
 import pyrebase
 
+import blescan
+import sys
+
+import bluetooth._bluetooth as bluez
+
 config = {
-    "apiKey": "AIzaSyARBceJ3lWLFDGVoQ1VfUtY4GXXzsyVPDI",
-    "authDomain": "teste2-943e6.firebaseapp.com",
-    "databaseURL": "https://teste2-943e6.firebaseio.com",
-    "projectId": "teste2-943e6",
-    "storageBucket": "teste2-943e6.appspot.com",
-    "messagingSenderId": "808394656425"
   }
 
 firebase = pyrebase.initialize_app(config)
@@ -23,18 +22,31 @@ for x in knownaddress:
     print(x)
 
 #### FIM ####
+#################################################################
 
-#### CHECAGEM SE O ENDEREÇO OBTIDO ESTA NA LISTA ####
 
-#adqaddress = ##TODO
+dev_id = 0
+try:
+	sock = bluez.hci_open_dev(dev_id)
+	print "ble thread started"
 
-#if adq_address in knownaddress:
-#    knownaddress.index(adq_address)
-#    print ("ENTRADA PERMITIDA")
-#else:
-#    print ("ENTRADA NEGADA")
+except:
+	print "error accessing bluetooth device..."
+    	sys.exit(1)
 
-if knownaddress.index("23a"):
-    print ("opa")
-else:
-    print("oi")
+blescan.hci_le_set_scan_parameters(sock)
+blescan.hci_enable_le_scan(sock)
+
+while True:
+	returnedList = blescan.parse_events(sock, 10)
+	print "----------------------------------------"
+	for beacon in returnedList:
+            ##separar o beacon em partes para comparar somente o enderço mac
+            adqaddress = beacon
+            if adq_address in knownaddress: 
+                knownaddress.index(adq_address)
+                print ("ENTRADA PERMITIDA")
+            else:
+                print ("ENTRADA NEGADA")
+
+
