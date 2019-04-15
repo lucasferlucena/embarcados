@@ -10,7 +10,7 @@ config = {
   }
 
 firebase = pyrebase.initialize_app(config)
-#### FORMACAO DA LISTA DE ENDERE�OS MAC HABILITADOS ####
+#### FORMACAO DA LISTA DE ENDEREÇOS MAC HABILITADOS ####
 db = firebase.database()
 users = db.child("users").get()
 
@@ -41,7 +41,7 @@ while True:
 	returnedList = blescan.parse_events(sock, 10)
 	print "----------------------------------------"
 	for beacon in returnedList:
-            ##separar o beacon em partes para comparar somente o ender�o mac
+            ##separar o beacon em partes para comparar somente o enderço mac
             adqaddress = beacon
             if adq_address in knownaddress: 
                 knownaddress.index(adq_address)
@@ -49,4 +49,4 @@ while True:
             else:
                 print ("ENTRADA NEGADA")
 
-
+##definir um numero de vezes que o scan será executado e quando a lista será atualizada
