@@ -1,12 +1,7 @@
 import pyrebase
 
 config = {
-    "apiKey": "AIzaSyAsqVg-W7sJt3BzoAgfc_fOCXjrkyuxsgw",
-    "authDomain": "teste-72266.firebaseapp.com",
-    "databaseURL": "https://teste-72266.firebaseio.com",
-    "projectId": "teste-72266",
-    "storageBucket": "teste-72266.appspot.com",
-    "messagingSenderId": "775842862764"
+
 }
 
 firebase = pyrebase.initialize_app(config)
